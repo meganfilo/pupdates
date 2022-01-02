@@ -95,7 +95,7 @@ export default {
       let sorted = [...this.days];
       sorted.sort((dateA, dateB) => {
         // TODO: Revisit in the future - there must be a cleaner way of doing this.
-        if ((dateA.date.split("-")[0] = dateB.date.split("-")[0])) {
+        if (dateA.date.split("-")[0] == dateB.date.split("-")[0]) {
           // checks month
           if ((dateA.date.split("-")[1] = dateB.date.split("-")[1])) {
             // checks month
@@ -121,6 +121,8 @@ export default {
           return -1;
         }
         if (dateA.date.split("-")[0] < dateB.date.split("-")[0]) {
+          console.log(dateA.date, " is less than ", dateB.date);
+
           return 1;
         }
       });
