@@ -11,7 +11,7 @@
           type="datetime-local"
           id="date-time"
           name="meeting-time"
-          min="2020-01-01T00:00"
+          min="2020-01-01T12:00"
           max="2022-12-31T00:00"
           required
         />
@@ -83,6 +83,7 @@
 export default {
   emits: ["grabFormData"],
   data() {
+    //2021-05-21T00:00
     return {
       eventId: Math.floor(Math.random() * 100),
       dateTime: new Date().toISOString().split("T")[0] + "T12:00",
@@ -100,29 +101,27 @@ export default {
       this.typeIsSelected = true;
     },
     dateTime: function () {
-      // console.log(this.dateTime);
       this.convertedDate = this.dateTime.split("T")[0];
       this.convertedTime = this.dateTime.split("T")[1];
-      // console.log(this.convertedTime);
-      // this.convertedTime = this.dateTime.split("T")[1].split(":")[0];
     },
   },
   methods: {
     simplifyTime(militaryTime) {
-      console.log("fromInput ", this.dateTime);
       let hour = militaryTime.split(":")[0];
       let minutes = militaryTime.split(":")[1];
       let suffix;
 
-      if (hour > 0 && hour <= 12) {
+      if (hour > 0 && hour < 12) {
+        hour = hour.slice(1);
         suffix = "am";
-        return;
-      } else if (hour > 12) {
-        console.log("greater than 12!");
-        hour = hour - 12;
+      } else if (hour >= 12) {
+        if (hour > 12) {
+          hour = hour - 12;
+        }
         suffix = "pm";
       } else if (hour == 0) {
         hour = 12;
+        suffix = "am";
       }
 
       return hour + ":" + minutes + suffix;
@@ -137,6 +136,7 @@ export default {
       this.convertedTime = new Date().toISOString().split("T")[1];
     },
     submitForm() {
+      console.log(this.dateTime);
       let date;
       let newEvent;
       if (
@@ -147,7 +147,7 @@ export default {
         date = this.convertedDate;
         newEvent = {
           id: this.eventId,
-          time: this.simplifyTime(this.convertedTime),
+          time: this.simplifyTime(this.dateTime.split("T")[1]),
           type: this.type,
           note: this.message,
         };
