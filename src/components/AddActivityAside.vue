@@ -98,7 +98,7 @@ export default {
     // if a type !== null, change typeIsSelected to true
     // this will show bottom half of form
     type: function () {
-      this.typeIsSelected = true;
+      this.typeIsSelected = this.type;
     },
     dateTime: function () {
       this.convertedDate = this.dateTime.split("T")[0];
